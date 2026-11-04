@@ -156,6 +156,19 @@ function synthese(operations) {
   }
   console.log('Rappel : ce sont des dépenses. Sans les revenus, elles ne mesurent pas la rentabilité.');
 }
+// Choix 6 (bonus) : supprimer une opération et enregistrer.
+async function supprimer(operations) {
+  const saisie = await demander('Identifiant : ');
+  if (saisie === null) return;
+  const id = saisie.toUpperCase();
+  const supprimee = supprimerOperation(operations, id);
+  if (supprimee === undefined) {
+    console.log(`Opération ${id} introuvable.`);
+    return;
+  }
+  await enregistrerJson(FICHIER_DONNEES, operations);
+  console.log(`Opération ${id} supprimée. Le registre compte ${operations.length} opération(s).`);
+}
 
 
 
