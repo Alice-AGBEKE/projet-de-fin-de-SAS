@@ -37,3 +37,42 @@ async function chargerRegistre() {
     return [];
   }
 }
+
+
+// Choix 1 : poser les six questions, vérifier, ajouter, enregistrer.
+async function ajouter(operations) {
+  console.log('--- Ajouter une opération ---');
+  const id = await demander('Identifiant (ex. O11) : ');
+  if (id === null) return;
+  const date = await demander('Date (AAAA-MM-JJ) : ');
+  if (date === null) return;
+  const parcelle = await demander('Parcelle (ex. P1) : ');
+  if (parcelle === null) return;
+  const culture = await demander('Culture (ex. tomate) : ');
+  if (culture === null) return;
+  const operation = await demander(`Opération (${OPERATIONS.join(', ')}) : `);
+  if (operation === null) return;
+  const cout = await demander('Coût en FCFA : ');
+  if (cout === null) return;
+
+  const saisie = {
+    id: id.toUpperCase(),
+    date,
+    parcelle: parcelle.toUpperCase(),
+    culture: culture.toLowerCase(),
+    operation: operation.toLowerCase(),
+    coutFCFA: cout,
+  };
+
+  const erreurs = ajouterOperation(operations, saisie);
+  if (erreurs.length === 0) {
+    await enregistrerJson(FICHIER_DONNEES, operations);
+    console.log(`Opération ${saisie.id} ajoutée. Le registre compte ${operations.length} opération(s).`);
+  } else {
+    console.log('Opération refusée :');
+    for (const erreur of erreurs) {
+      console.log(`  - ${erreur}`);
+    }
+    console.log(`Le registre compte toujours ${operations.length} opération(s).`);
+  }
+}
