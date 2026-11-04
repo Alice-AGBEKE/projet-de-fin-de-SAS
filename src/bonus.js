@@ -19,4 +19,44 @@ export function supprimerOperation(operations, id) {
   return supprimee;
 }
 
+// Modifie UN champ d'une opération. La nouvelle valeur arrive sous forme de TEXTE et suit
+// les mêmes règles qu'à l'ajout. Renvoie les erreurs : [] si la modification est faite ;
+// sinon les messages, et l'opération ne change pas.
+// Erreurs : identifiant introuvable · champ 'id' (non modifiable) · champ absent de CHAMPS_MODIFIABLES
+//           · valeur refusée par les règles de l'ajout.
+export function modifierOperation(operations, id, champ, valeur) {
+  const operation = trouverParId(operations, id);
 
+  if (operation === undefined) {
+    return [`Opération ${id} introuvable.`];
+  }
+
+  if (champ === 'id') {
+    return ["L'identifiant ne peut pas être modifié."];
+  }
+
+  if (!CHAMPS_MODIFIABLES.includes(champ)) {
+    return [`Le champ « ${champ} » n'est pas modifiable (champs possibles : ${CHAMPS_MODIFIABLES.join(', ')}).`];
+  }
+
+  const nouvelleOperation = {
+    ...operation,
+    [champ]: valeur
+  };
+
+  const autresOperations = operations.filter(
+    (op) => op.id !== operation.id
+  );
+
+  const erreurs = verifierOperation(nouvelleOperation, autresOperations);
+
+  if (erreurs.length > 0) {
+    return erreurs;
+  }
+
+  operation[champ] = champ === 'coutFCFA'
+    ? Number(valeur)
+    : valeur;
+
+  return [];
+}
