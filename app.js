@@ -87,4 +87,41 @@ async function main() {
   ouvrirSaisie();
   afficherAccueil();
   const operations = await chargerRegistre();
+
+  let continuer = true;
+  while (continuer) {
+    afficherMenu();
+    const choix = await demander('Votre choix : ');
+    if (choix === null) {
+  console.log('Au revoir !');
+  break;
+    }
+    try {
+      switch (choix) {
+        case '1':
+          await ajouter(operations);
+          break;
+        case '2':
+          lister(operations);
+          break;
+          case '0':
+          console.log('Au revoir !');
+          continuer = false;
+          break;
+        default:
+          console.log(`Choix inconnu : « ${choix} ». Tapez un chiffre du menu.`);
+      }
+    } catch (erreur) {
+      if (erreur.message.startsWith('TODO')) {
+        console.log(`À compléter : ${erreur.message}`);
+      } else {
+        console.log(`Erreur inattendue : ${erreur.message}`);
+      }
+    }
+  }
+
+  fermerSaisie();
 }
+
+main();
+
