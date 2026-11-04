@@ -16,3 +16,13 @@ function afficherAccueil() {
   console.log('   Exploitation maraîchère pédagogique');
   console.log('==================================================');
 }
+function afficherMenu() {
+  console.log('');
+  console.log('--------------------- MENU ---------------------');
+  console.log('1. Ajouter une opération');
+  console.log('2. Lister les opérations');
+  console.log('3. Rechercher (identifiant, parcelle, culture)');
+  console.log('4. Trier (coût, date)');
+  console.log('5. Synthèse des dépenses');
+  console.log('0. Quitter');
+}
