@@ -72,3 +72,12 @@ export function parcelleLaPlusCouteuse(operations) {
   const synthese = syntheseParParcelle(operations);
   let meilleure = null;
 }
+// On parcourt les opérations dans l'ordre du registre : en cas d'égalité, la première parcelle rencontrée gagne.
+  for (const operation of operations) {
+    const total = synthese[operation.parcelle].total;
+    if (meilleure === null || total > meilleure.total) {
+      meilleure = { parcelle: operation.parcelle, total };
+    }
+  }
+  return meilleure;
+
