@@ -4,7 +4,12 @@
 
 ## Contexte
 
-✏️ *En cinq à huit phrases : qui utilise l'outil (son métier, son geste professionnel), son besoin, ce qu'il saisit, ce que le programme lui affiche, ce que l'outil ne fait pas.*
+Notre outil est destinée aux producteurs de maraichers qui souhaitent suivre les activités et les depenses de leurs parcelles.
+Elle leur permet d'enregistrer les activités réalisés comme le semis, l'arrosage, le désherbageet la recolt.
+Pour chaque activité, le producteur indique la parcelle, le type de travail, la date et le cout de production.
+Le programme affiche les opérations enregistrées, leur nombre et le total des depenses. Il permet aussi de rechercher et de tirer les opérations.
+Cependant, il ne prend pas en compte les revenus des ventes et ne calcule donc pas la la production la rentabilité et le revenu.
+Nous construrons notre registre en Java Scrip sur Visual Studio code.
 
 ## Prérequis et lancement
 
