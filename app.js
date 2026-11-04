@@ -134,6 +134,31 @@ async function trier(operations) {
     console.log('Choix inconnu : retour au menu.');
   }
 }
+
+// Choix 5 : synthèse des dépenses enregistrées.
+function synthese(operations) {
+  console.log('--- Synthèse des dépenses enregistrées ---');
+  console.log(`Nombre d'opérations : ${operations.length}`);
+  console.log(`Total des coûts : ${totalCouts(operations)} FCFA`);
+  console.log('Par parcelle :');
+  for (const [parcelle, valeurs] of Object.entries(syntheseParParcelle(operations))) {
+    console.log(`  ${parcelle} : ${valeurs.nombre} opération(s), ${valeurs.total} FCFA`);
+  }
+  const extremes = coutMinMax(operations);
+  if (extremes === null) {
+    console.log('Coût minimum et maximum : aucune donnée');
+  } else {
+    console.log(`Coût minimum : ${extremes.min} FCFA · Coût maximum : ${extremes.max} FCFA`);
+  }
+  const plusCouteuse = parcelleLaPlusCouteuse(operations);
+  if (plusCouteuse !== null) {
+    console.log(`Parcelle la plus coûteuse : ${plusCouteuse.parcelle} (${plusCouteuse.total} FCFA)`);
+  }
+  console.log('Rappel : ce sont des dépenses. Sans les revenus, elles ne mesurent pas la rentabilité.');
+}
+
+
+
 async function main() {
   ouvrirSaisie();
   afficherAccueil();
