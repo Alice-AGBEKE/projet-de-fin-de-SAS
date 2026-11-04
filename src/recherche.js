@@ -11,3 +11,8 @@ export function filtrerParParcelle(operations, parcelle) {
   }
   return resultat;
 }
+// Renvoie une COPIE triée par coût croissant, avec un comparateur numérique.
+// Deux opérations de même coût gardent leur ordre d'origine. Le tableau reçu ne doit pas changer d'ordre.
+export function trierParCout(operations) {
+  return [...operations].sort((a, b) => a.coutFCFA - b.coutFCFA);
+}
