@@ -26,38 +26,27 @@ export function supprimerOperation(operations, id) {
 //           · valeur refusée par les règles de l'ajout.
 export function modifierOperation(operations, id, champ, valeur) {
   const operation = trouverParId(operations, id);
-
   if (operation === undefined) {
     return [`Opération ${id} introuvable.`];
   }
-
   if (champ === 'id') {
     return ["L'identifiant ne peut pas être modifié."];
   }
-
   if (!CHAMPS_MODIFIABLES.includes(champ)) {
     return [`Le champ « ${champ} » n'est pas modifiable (champs possibles : ${CHAMPS_MODIFIABLES.join(', ')}).`];
   }
-
-  const nouvelleOperation = {
-    ...operation,
-    [champ]: valeur
-  };
-
+  const nouvelleOperation =
+    {...operation, coutFCFA: String(operation.coutFCFA), [champ]: valeur};
   const autresOperations = operations.filter(
-    (op) => op.id !== operation.id
+    (op) => op.id !== id
   );
-
   const erreurs = verifierOperation(nouvelleOperation, autresOperations);
-
   if (erreurs.length > 0) {
     return erreurs;
   }
-
   operation[champ] = champ === 'coutFCFA'
     ? Number(valeur)
     : valeur;
-
   return [];
 }
 
@@ -70,14 +59,14 @@ export function trierParCoutDecroissant(operations) {
 // ou null si le registre est vide. En cas d'égalité : la première parcelle rencontrée.
 export function parcelleLaPlusCouteuse(operations) {
   const synthese = syntheseParParcelle(operations);
+
   let meilleure = null;
-}
-// On parcourt les opérations dans l'ordre du registre : en cas d'égalité, la première parcelle rencontrée gagne.
-  for (const operation of operations) {
-    const total = synthese[operation.parcelle].total;
-    if (meilleure === null || total > meilleure.total) {
-      meilleure = { parcelle: operation.parcelle, total };
+
+  for (const [parcelle, donnees] of Object.entries(synthese)) {
+    if (meilleure === null || donnees.total > meilleure.total) {
+      meilleure = { parcelle, total: donnees.total };
     }
   }
-  return meilleure;
 
+  return meilleure;
+}

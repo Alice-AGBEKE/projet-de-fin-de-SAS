@@ -7,7 +7,7 @@ import { chargerJson, enregistrerJson } from './src/stockage.js';
 import { OPERATIONS, ajouterOperation, formaterOperation, listerOperations, trouverParId } from './src/registre.js';
 import { filtrerParCulture, filtrerParParcelle, trierParCout, trierParDate } from './src/recherche.js';
 import { coutMinMax, syntheseParParcelle, totalCouts } from './src/synthese.js';
-
+import { parcelleLaPlusCouteuse, modifierOperation, supprimerOperation, trierParCoutDecroissant } from './src/bonus.js';
 const FICHIER_DONNEES = 'donnees/operations.json';
 
 function afficherAccueil() {
@@ -24,6 +24,8 @@ function afficherMenu() {
   console.log('3. Rechercher (identifiant, parcelle, culture)');
   console.log('4. Trier (coût, date)');
   console.log('5. Synthèse des dépenses');
+  console.log('6. Supprimer une opération');
+  console.log('7. Modifier une opération');
   console.log('0. Quitter');
 }
 // Charge les données ; en cas d'échec, le registre démarre vide.
@@ -175,26 +177,39 @@ async function supprimer(operations) {
 async function modifier(operations) {
   const saisieId = await demander('Identifiant : ');
   if (saisieId === null) return;
+
   const id = saisieId.toUpperCase();
+
   const champ = await demander('Champ à modifier (date, parcelle, culture, operation, coutFCFA) : ');
   if (champ === null) return;
+
   const valeur = await demander('Nouvelle valeur : ');
   if (valeur === null) return;
-}
-// Même mise en forme qu'à l'ajout : parcelle en majuscules, culture et opération en minuscules.
-  let valeurNormalisee = valeur;
-  if (champ === 'parcelle') valeurNormalisee = valeur.toUpperCase();
-  if (champ === 'culture' || champ === 'operation') valeurNormalisee = valeur.toLowerCase();
 
+  // Normaliser la valeur
+  let valeurNormalisee = valeur;
+
+  if (champ === 'parcelle') {
+    valeurNormalisee = valeur.toUpperCase();
+  }
+
+  if (champ === 'culture' || champ === 'operation') {
+    valeurNormalisee = valeur.toLowerCase();
+  }
+
+  // Modifier l'opération
   const erreurs = modifierOperation(operations, id, champ, valeurNormalisee);
+
   if (erreurs.length === 0) {
     await enregistrerJson(FICHIER_DONNEES, operations);
     console.log(`Opération ${id} modifiée.`);
   } else {
     console.log('Modification refusée :');
+
     for (const erreur of erreurs) {
       console.log(`  - ${erreur}`);
     }
+  }
   }
 
 
@@ -218,6 +233,21 @@ async function main() {
           break;
         case '2':
           lister(operations);
+          break;
+          case '3':
+          await rechercher(operations);
+          break;
+        case '4':
+          await trier(operations);
+          break;
+        case '5':
+          synthese(operations);
+          break;
+        case '6':
+          await supprimer(operations);
+          break;
+        case '7':
+          await modifier(operations);
           break;
           case '0':
           console.log('Au revoir !');
