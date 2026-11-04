@@ -29,3 +29,77 @@ export function trouverParId(operations, id) {
   }
   return undefined;
 }
+
+// Contrôle une saisie AVANT de l'ajouter. Tous les champs arrivent sous forme de TEXTE :
+// { id: 'O11', date: '2026-10-27', parcelle: 'P1', culture: 'tomate', operation: 'récolte', coutFCFA: '2500' }
+// Renvoie un tableau de messages d'erreur, un message par règle non respectée ;
+// un tableau vide signifie « saisie valide ».
+// Règles : id obligatoire et unique · date réelle au format AAAA-MM-JJ · parcelle et culture
+// obligatoires (n'importe quel texte non vide) · operation présente dans OPERATIONS
+// · coutFCFA nombre positif ou nul.
+export function verifierOperation(saisie, operations) {
+  const erreurs = [];
+
+  // 1. Identifiant obligatoire
+  if (!saisie.id || saisie.id.trim() === '') {
+    erreurs.push("L'identifiant est obligatoire.");
+  }
+
+  // 2. Identifiant unique
+  if (
+    saisie.id &&
+    operations.some(op => op.id === saisie.id)
+  ) {
+    erreurs.push("Cet identifiant existe déjà.");
+  }
+
+  // 3. Date réelle au format AAAA-MM-JJ
+  const date = saisie.date || '';
+  const correspondance = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+
+  if (correspondance) {
+    const annee = Number(correspondance[1]);
+    const mois = Number(correspondance[2]);
+    const jour = Number(correspondance[3]);
+
+    const dateVerifiee = new Date(Date.UTC(annee, mois - 1, jour));
+
+    if (
+      dateVerifiee.getUTCFullYear() !== annee ||
+      dateVerifiee.getUTCMonth() !== mois - 1 ||
+      dateVerifiee.getUTCDate() !== jour
+    ) {
+      erreurs.push("La date doit être réelle et au format AAAA-MM-JJ.");
+    }
+  } else {
+    erreurs.push("La date doit être réelle et au format AAAA-MM-JJ.");
+  }
+
+  // 4. Parcelle obligatoire
+  if (!saisie.parcelle || saisie.parcelle.trim() === '') {
+    erreurs.push("La parcelle est obligatoire.");
+  }
+
+  // 5. Culture obligatoire
+  if (!saisie.culture || saisie.culture.trim() === '') {
+    erreurs.push("La culture est obligatoire.");
+  }
+
+  // 6. Opération autorisée
+  if (!OPERATIONS.includes(saisie.operation)) {
+    erreurs.push("L'opération n'est pas autorisée.");
+  }
+
+  // 7. Coût positif ou nul
+  const cout = Number(saisie.coutFCFA);
+
+  if (
+    saisie.coutFCFA.trim() === '' ||
+    !Number.isFinite(cout) ||
+    cout < 0
+  ) {
+    erreurs.push("Le coût doit être un nombre positif ou nul.");
+  }
+
+  return erreurs;
+}
