@@ -65,3 +65,10 @@ export function modifierOperation(operations, id, champ, valeur) {
 export function trierParCoutDecroissant(operations) {
   return [...operations].sort((a, b) => b.coutFCFA - a.coutFCFA);
 }
+
+// Renvoie la parcelle dont le total des coûts est le plus élevé : { parcelle, total },
+// ou null si le registre est vide. En cas d'égalité : la première parcelle rencontrée.
+export function parcelleLaPlusCouteuse(operations) {
+  const synthese = syntheseParParcelle(operations);
+  let meilleure = null;
+}
