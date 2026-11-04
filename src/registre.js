@@ -10,3 +10,12 @@ export const OPERATIONS = ['semis', 'arrosage', 'désherbage', 'repiquage', 'ré
 export function formaterOperation(operation) {
   return `${operation.id} | ${operation.date} | ${operation.parcelle} | ${operation.culture} | ${operation.operation} | ${operation.coutFCFA} FCFA`;
 }
+// Renvoie un texte avec une opération par ligne (lignes séparées par '\n'),
+// ou 'Aucune opération enregistrée.' si la liste est vide.
+export function listerOperations(operations) {
+  if (operations.length === 0) {
+    return "Aucune opération enregistrée.";
+  } else {
+    return operations.map(formaterOperation).join('\n');
+  }
+}
