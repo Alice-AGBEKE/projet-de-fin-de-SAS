@@ -181,6 +181,22 @@ async function modifier(operations) {
   const valeur = await demander('Nouvelle valeur : ');
   if (valeur === null) return;
 }
+// Même mise en forme qu'à l'ajout : parcelle en majuscules, culture et opération en minuscules.
+  let valeurNormalisee = valeur;
+  if (champ === 'parcelle') valeurNormalisee = valeur.toUpperCase();
+  if (champ === 'culture' || champ === 'operation') valeurNormalisee = valeur.toLowerCase();
+
+  const erreurs = modifierOperation(operations, id, champ, valeurNormalisee);
+  if (erreurs.length === 0) {
+    await enregistrerJson(FICHIER_DONNEES, operations);
+    console.log(`Opération ${id} modifiée.`);
+  } else {
+    console.log('Modification refusée :');
+    for (const erreur of erreurs) {
+      console.log(`  - ${erreur}`);
+    }
+  }
+
 
 async function main() {
   ouvrirSaisie();
