@@ -171,6 +171,16 @@ async function supprimer(operations) {
 }
 
 
+// Choix 7 (bonus) : modifier un champ d'une opération et enregistrer.
+async function modifier(operations) {
+  const saisieId = await demander('Identifiant : ');
+  if (saisieId === null) return;
+  const id = saisieId.toUpperCase();
+  const champ = await demander('Champ à modifier (date, parcelle, culture, operation, coutFCFA) : ');
+  if (champ === null) return;
+  const valeur = await demander('Nouvelle valeur : ');
+  if (valeur === null) return;
+}
 
 async function main() {
   ouvrirSaisie();
