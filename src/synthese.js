@@ -9,3 +9,19 @@ export function totalCouts(operations) {
   }
   return total;
 }
+// Renvoie un objet : pour chaque parcelle, le nombre d'opérations et le total de leurs coûts.
+// Exemple : { P1: { nombre: 4, total: 15500 }, P2: { nombre: 3, total: 9500 } }
+// Liste vide : {} (un objet vide).
+export function syntheseParParcelle(operations) {
+  const synthese = {};
+  for (const operation of operations) {
+    const cle = operation.parcelle;
+    if (!(cle in synthese)) {
+      synthese[cle] = { nombre: 0, total: 0 };
+    }
+    synthese[cle].nombre += 1;
+    synthese[cle].total += operation.coutFCFA;
+  }
+  return synthese;
+}
+
