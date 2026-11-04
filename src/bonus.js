@@ -60,3 +60,8 @@ export function modifierOperation(operations, id, champ, valeur) {
 
   return [];
 }
+
+// Renvoie une COPIE triée par coût décroissant
+export function trierParCoutDecroissant(operations) {
+  return [...operations].sort((a, b) => b.coutFCFA - a.coutFCFA);
+}
