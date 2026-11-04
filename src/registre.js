@@ -115,3 +115,26 @@ export function creerOperation(saisie) {
   };
 }
 
+
+// Ajoute la saisie au registre si elle est valide (verifierOperation, puis creerOperation).
+// Renvoie les erreurs : [] si l'opération a été ajoutée ; sinon les messages, et rien n'est ajouté.
+export function ajouterOperation(operations, saisie) {
+  // 1. Vérifier la saisie
+  const erreurs = verifierOperation(saisie, operations);
+
+  // 2. Si la saisie contient des erreurs, ne rien ajouter
+  if (erreurs.length > 0) {
+    return erreurs;
+  }
+
+  // 3. Transformer la saisie en opération
+  const nouvelleOperation = creerOperation(saisie);
+
+  // 4. Ajouter l'opération au registre
+  operations.push(nouvelleOperation);
+
+  // 5. Signaler que l'ajout a réussi
+  return [];
+}
+
+
