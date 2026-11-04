@@ -76,3 +76,15 @@ async function ajouter(operations) {
     console.log(`Le registre compte toujours ${operations.length} opération(s).`);
   }
 }
+
+// Choix 2 : afficher toutes les opérations.
+function lister(operations) {
+  console.log(`--- Liste des opérations (${operations.length}) ---`);
+  console.log(listerOperations(operations));
+}
+
+async function main() {
+  ouvrirSaisie();
+  afficherAccueil();
+  const operations = await chargerRegistre();
+}
