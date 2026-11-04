@@ -26,3 +26,14 @@ function afficherMenu() {
   console.log('5. Synthèse des dépenses');
   console.log('0. Quitter');
 }
+// Charge les données ; en cas d'échec, le registre démarre vide.
+async function chargerRegistre() {
+  try {
+    const operations = await chargerJson(FICHIER_DONNEES);
+    console.log(`${operations.length} opération(s) chargée(s) depuis ${FICHIER_DONNEES}.`);
+    return operations;
+  } catch (erreur) {
+    console.log(`Impossible de lire ${FICHIER_DONNEES} : ${erreur.message}. Le registre démarre vide.`);
+    return [];
+  }
+}
