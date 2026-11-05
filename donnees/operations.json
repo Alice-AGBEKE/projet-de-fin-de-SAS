@@ -78,5 +78,21 @@
     "culture": "aubergine",
     "operation": "désherbage",
     "coutFCFA": 6000
+  },
+  {
+    "id": "012",
+    "date": "2026-11-12",
+    "parcelle": "P2",
+    "culture": "gombo",
+    "operation": "semis",
+    "coutFCFA": 5000
+  },
+  {
+    "id": "004",
+    "date": "2026-11-05",
+    "parcelle": "P7",
+    "culture": "gombo",
+    "operation": "semis",
+    "coutFCFA": 2500
   }
 ]
