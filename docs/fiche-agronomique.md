@@ -4,14 +4,14 @@
 **Culture choisie** et grandes étapes de son cycle : Tomate
 
 
-| Opération (identifiant) | Étape du cycle | Ce qu'on vérifie sur la parcelle à cette étape | Cout de prod|
 
-|Semi      | 01 |Debut de cycle | La qualité de la graine, mise en terre ou en pepiniere à la bonne période            | 3000 FCFA|
-|Repiquage |02  |Apres le semis | Que le jeune plant est transféré sur la parcelle et que le plant est acces robuste pour survivre | 5000 FCFA|
-|Arrosage  |03  |Tout au long du cycle | Que les besoins en eau de la culture sont enregistré avec les dates pour suivre les depenses | 2000 FCFA|
-|Désherbage|04  | Tout au long du cycle | Que l'operation d'entretion est effecturee et enregistree  | 4000 FCFA|
-|Recolte | 05  | Fin du cycle | Que la date de recolte est enregistre le cout de la recolte est note mais pas la quantité |
-
+| Opération (identifiant) | Étape du cycle | Ce qu'on vérifie sur la parcelle à cette étape | Coût de production |
+|---|---|---|---:|
+| Semis (01) | Début du cycle | La qualité des graines et leur mise en terre ou en pépinière à la bonne période. | 3 000 FCFA |
+| Repiquage (02) | Après le semis | Le transfert des jeunes plants sur la parcelle et leur robustesse suffisante pour favoriser leur reprise. | 5 000 FCFA |
+| Arrosage (03) | Tout au long du cycle | Les besoins en eau de la culture, enregistrés avec les dates pour assurer le suivi des dépenses. | 2 000 FCFA |
+| Désherbage (04) | Tout au long du cycle | La réalisation et l'enregistrement de l'opération d'entretien de la parcelle. | 4 000 FCFA |
+| Récolte (05) | Fin du cycle | L'enregistrement de la date de récolte et du coût de l'opération. La quantité récoltée n'est pas suivie dans cette version du registre. | À renseigner |
 
 **Une donnée manquante** (revenus, quantité récoltée, surface, eau apportée…) et ce qu'on ne peut donc pas conclure : On ne peut pas conclure la rentabilité de la culture.
 
